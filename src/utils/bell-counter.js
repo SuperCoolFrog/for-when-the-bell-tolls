@@ -14,7 +14,7 @@ const calculateBellTolls = function(start, end, total=0) {
   const updatedTotal = total + startAs12Hour;
 
   switch(true) {
-    case start === end:
+    case start === end && total !== 0:
       return updatedTotal; 
     case start + 1 > 23:
       return calculateBellTolls(0, end, updatedTotal);
