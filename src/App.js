@@ -24,14 +24,14 @@ class App extends Component {
 
     const startTimeErrorMessage = !startTime || validate24HourTime(startTime);
     const endTimeErrorMessage = !endTime || validate24HourTime(endTime);
+    const isValid = !(startTimeErrorMessage || endTimeErrorMessage);
 
     const total = totalBellTolls(startTime, endTime);
 
     return (
       <div className='app'>
         <div className='number-of-bell-tolls'>
-          {total}
-          <hr />
+          { isValid && `Number of bell Tolls: ${total}`}
         </div>
         <TimeInput label='Start Time' value={startTime}
           onChange={this.updateTime('startTime')} errorMessage={startTimeErrorMessage} />
