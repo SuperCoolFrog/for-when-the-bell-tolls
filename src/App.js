@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { totalBellTolls } from './utils/bell-counter';
+import { validate24HourTime } from './validators/validate-time';
+import TimeInput from './components/time-input/TimeInput';
+import './app.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startTime: '',
+      endTime: '',
+      numberOfBells: 0,
+    }; 
+  }
+
+  updateTime = (key) => (e) => this.setState({ [key]: e.target.value });
+
   render() {
+    const {
+      startTime,
+      endTime
+    } = this.state;
+
+    const startTimeErrorMessage = !startTime || validate24HourTime(startTime);
+    const endTimeErrorMessage = !endTime || validate24HourTime(endTime);
+
+    const total = totalBellTolls(startTime, endTime);
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className='app'>
+        <div className='number-of-bell-tolls'>
+          {total}
+          <hr />
+        </div>
+        <TimeInput label='Start Time' value={startTime}
+          onChange={this.updateTime('startTime')} errorMessage={startTimeErrorMessage} />
+        <TimeInput label='End Time' value={endTime}
+          onChange={this.updateTime('endTime')} errorMessage={endTimeErrorMessage} />
       </div>
     );
   }

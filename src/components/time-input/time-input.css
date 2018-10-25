@@ -1,0 +1,22 @@
+.time-input-component {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.time-input-component .time-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time-input-component .time-input label {
+  flex: 10 1 50px;
+}
+
+.time-input-component .time-input input {
+  flex: 20 1 200px;
+}
+.time-input-component .error-message {
+  color: red;
+  min-height: 1em;
+}
