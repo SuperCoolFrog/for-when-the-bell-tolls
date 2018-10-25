@@ -1,3 +1,5 @@
+import memoize from 'fast-memoize';
+
 const getHours = timeStr => parseInt(timeStr.split(':')[0]) || 0;
 const getMinutes = timeStr => parseInt(timeStr.split(':')[1]) || 0;
 const to12Hour = hour => {
@@ -21,10 +23,12 @@ const calculateBellTolls = function(start, end, total=0) {
   }
 };
 
-export const totalBellTolls = (startTime, endTime) => {
+const totalBellTollsCalculator = (startTime, endTime) => {
   const startTimeMinutes = getMinutes(startTime); 
   const startTimeHours = getHours(startTime) + (startTimeMinutes > 0 ? 1 : 0); 
   const endTimeHours = getHours(endTime);
 
   return calculateBellTolls(startTimeHours, endTimeHours);
 };
+
+export const totalBellTolls = memoize(totalBellTollsCalculator);
